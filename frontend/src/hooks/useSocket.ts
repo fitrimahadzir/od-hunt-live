@@ -1,14 +1,19 @@
 import { useEffect, useState, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 
+const BACKEND_URL =
+  import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
 export const useSocket = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [gameState, setGameState] = useState<any>(null);
-  const [tiktokStatus, setTiktokStatus] = useState<any>({ status: "disconnected" });
+  const [tiktokStatus, setTiktokStatus] = useState<any>({
+    status: "disconnected",
+  });
   const [notifications, setNotifications] = useState<any[]>([]);
 
   useEffect(() => {
-    const newSocket = io();
+    const newSocket = io(BACKEND_URL);
     setSocket(newSocket);
 
     newSocket.on("gameState", (state) => {

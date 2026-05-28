@@ -14,7 +14,6 @@ export default function App() {
   const [showLikeBar, setShowLikeBar] = useState(false);
   const socketData = useSocket();
 
-  // Simple route check from URL
   useEffect(() => {
     if (window.location.hash === "#admin") {
       setIsAdminOpen(true);
@@ -26,15 +25,11 @@ export default function App() {
       "relative selection:bg-neon-purple selection:text-white w-screen h-screen overflow-hidden flex transition-colors duration-500",
       isDarkMode ? "dark bg-slate-900 text-white" : "bg-dark-bg text-slate-900"
     )}>
-      {/* The main overlay is always visible */}
       <div className="flex-1 relative">
         <Overlay {...socketData} showLikeBar={showLikeBar} />
       </div>
 
-      {/* Container for bottom right widgets */}
       <div className="fixed bottom-6 right-6 flex flex-col items-end gap-3 z-50">
-        
-        {/* Jawapan (Answer) Bubble */}
         {showAnswer && (() => {
           const gs = socketData.gameState;
           const oddPos = gs?.oddPosition;
@@ -50,7 +45,6 @@ export default function App() {
           );
         })()}
 
-        {/* One-line Admin Setting (Float Widget) */}
         <div className="flex items-center gap-2 bg-slate-900/80 backdrop-blur-md border border-slate-700/50 rounded-full p-1.5 pr-3 shadow-2xl transition-all duration-300 hover:bg-slate-900">
           <div className="flex items-center justify-center w-8 h-8 bg-slate-800 rounded-full border border-slate-700">
             <div className={clsx(
@@ -87,7 +81,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* Sidebar Admin Popup */}
       <Admin 
         isOpen={isAdminOpen} 
         onClose={() => setIsAdminOpen(false)} 

@@ -62,7 +62,7 @@ export default function Overlay({ gameState, notifications, tiktokStatus, adminA
               gridConfig={gameState.gridConfig || { cols: 18, rows: 12 }}
             />
 
-            {/* Gift / Heart CTA Banner - always visible */}
+            {/* Gift / Heart CTA Banner */}
             <div className="mt-6 w-full max-w-md">
               <div className="flex items-center gap-3 bg-gradient-to-r from-pink-500/10 to-red-500/10 border border-pink-500/30 rounded-2xl px-4 py-3 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-transparent pointer-events-none" />
@@ -81,7 +81,7 @@ export default function Overlay({ gameState, notifications, tiktokStatus, adminA
               </div>
             </div>
 
-            {/* Like Bar - toggleable */}
+            {/* Like Bar */}
             {showLikeBar && <div className="w-full max-w-md space-y-2 mt-2">
               <div className="bg-white/5 dark:bg-slate-900/50 border border-white/10 dark:border-slate-700 rounded-2xl px-4 py-3 transition-colors duration-500">
                 <div className="flex items-center justify-between mb-2">
@@ -186,8 +186,6 @@ export default function Overlay({ gameState, notifications, tiktokStatus, adminA
             </motion.div>
           )}
         </AnimatePresence>
-
-
 
         {/* Notifications */}
         <div className="absolute bottom-24 left-1/2 -translate-x-1/2 flex flex-col gap-2 z-40 pointer-events-none items-center">
