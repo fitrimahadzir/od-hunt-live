@@ -404,13 +404,14 @@ export default function Admin({
             {isDifficultyOpen && (
               <div className="flex flex-col gap-2 pt-3 border-t border-slate-700/50">
                 {DIFFICULTIES.map((d) => (
-                  <div
+                  <button
                     key={d.id}
+                    onClick={() => adminAction({ type: "setDifficulty", difficulty: d.id })}
                     className={clsx(
-                      "flex items-center justify-between px-3 py-2 rounded-xl border transition-all text-[11px] font-bold uppercase tracking-wider",
+                      "flex items-center justify-between px-3 py-2 rounded-xl border transition-all text-[11px] font-bold uppercase tracking-wider cursor-pointer",
                       gameState?.difficulty === d.id
                         ? "bg-neon-yellow text-slate-900 border-neon-yellow"
-                        : "bg-slate-900 border-slate-700 text-slate-400"
+                        : "bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
                     )}
                   >
                     <span>{d.label}</span>
@@ -420,7 +421,7 @@ export default function Admin({
                     )}>
                       +{d.points}
                     </span>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}

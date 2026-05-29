@@ -61,6 +61,7 @@ export interface Notification {
 export interface AdminAction {
   type: string;
   mode?: GridMode;
+  difficulty?: Difficulty;
   uniqueId?: string;
   nickname?: string;
   comment?: string;

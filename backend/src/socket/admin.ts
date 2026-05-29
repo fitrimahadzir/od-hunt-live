@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import { GameEngine } from "../game/engine.js";
-import { AdminAction, GridMode } from "../types.js";
+import { AdminAction, Difficulty, GridMode } from "../types.js";
 import { GRID_MODES } from "../config.js";
 
 export function handleAdminAction(
@@ -45,6 +45,12 @@ export function handleAdminAction(
     case "setGridMode":
       if (action.mode && GRID_MODES[action.mode as GridMode]) {
         gameEngine.setGridMode(action.mode as GridMode);
+      }
+      break;
+
+    case "setDifficulty":
+      if (action.difficulty) {
+        gameEngine.setDifficulty(action.difficulty as Difficulty);
       }
       break;
 

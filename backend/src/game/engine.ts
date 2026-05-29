@@ -143,6 +143,12 @@ export class GameEngine {
     this.generateNewGrid();
   }
 
+  setDifficulty(difficulty: Difficulty) {
+    this.difficulty = difficulty;
+    this.roundNumber++;
+    this.generateNewGrid();
+  }
+
   simulateCorrect() {
     const colLabels = getColLabels(this.gridMode);
     const label = `${colLabels[this.oddCol]}${this.oddRow + 1}`;
