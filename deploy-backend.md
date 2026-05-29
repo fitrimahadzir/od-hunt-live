@@ -17,7 +17,7 @@
 | **Name** | `odd-hunt-backend` |
 | **Root Directory** | (leave empty — use repo root) |
 | **Runtime** | Node |
-| **Build Command** | `npm run build --prefix backend` |
+| **Build Command** | `cd backend && npm install && npm run build` |
 | **Start Command** | `node backend/dist/server.cjs` |
 | **Plan** | Free (or your choice) |
 
