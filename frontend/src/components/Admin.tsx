@@ -181,16 +181,12 @@ export default function Admin({
                       : "bg-slate-900 border-slate-700 text-slate-500 hover:border-slate-500 hover:text-slate-300"
                   )}
                 >
-                  {mode}
+                  <span>{mode}</span>
+                  <span className="block text-[8px] font-mono font-normal tracking-normal opacity-60 mt-0.5">
+                    {mode === "LOW" ? "12×10" : mode === "MEDIUM" ? "15×11" : "18×12"}
+                  </span>
                 </button>
               ))}
-            </div>
-            <div className="text-[10px] text-slate-500 font-mono text-center">
-              {gameState?.gridMode === "LOW"
-                ? "12×10 · Warm-up"
-                : gameState?.gridMode === "MEDIUM"
-                ? "15×11 · Standard"
-                : "18×12 · Hardcore"}
             </div>
           </div>
 
