@@ -12,6 +12,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const PORT = Number(process.env.PORT) || 8080;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
+const SERVE_STATIC = process.env.SERVE_STATIC === "true";
 
 const app = express();
 const httpServer = createServer(app);
@@ -64,12 +65,14 @@ io.on("connection", (socket) => {
   });
 });
 
-const distPath = path.join(__dirname, "../../dist");
-app.use(express.static(distPath));
-app.get("*", (req, res) => {
-  if (req.path.startsWith("/api") || req.path.startsWith("/socket.io")) return;
-  res.sendFile(path.join(distPath, "index.html"));
-});
+if (SERVE_STATIC) {
+  const distPath = path.join(__dirname, "../../dist");
+  app.use(express.static(distPath));
+  app.get("*", (req, res) => {
+    if (req.path.startsWith("/api") || req.path.startsWith("/socket.io")) return;
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+}
 
 setInterval(() => {
   gameEngine.getState();
