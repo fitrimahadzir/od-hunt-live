@@ -205,7 +205,7 @@ export default function Overlay({ gameState, notifications, tiktokStatus, adminA
                 </div>
               </div>
             </div>}
-            <div className="mt-3 text-[11px] text-slate-500 dark:text-slate-600 text-center tracking-wider">
+            <div className="mt-3 text-[11px] text-slate-500 dark:text-slate-400 text-center tracking-wider">
               Designed & Developed by{" "}
               <a
                 href="https://fitrimahadzir.my"
