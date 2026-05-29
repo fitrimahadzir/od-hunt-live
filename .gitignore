@@ -7,4 +7,3 @@ coverage/
 .env
 !.env.example
 KIV/
-frontend/public/images/favicon.ico
