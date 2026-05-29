@@ -190,6 +190,50 @@ export default function Admin({
             </div>
           </div>
 
+          {/* Level */}
+          <div className="bg-slate-800/50 shadow-sm p-4 rounded-2xl border border-slate-700/50 space-y-2">
+            <button
+              onClick={() => setIsDifficultyOpen(!isDifficultyOpen)}
+              className="w-full flex items-center justify-between group outline-none"
+            >
+              <h2 className="text-xs font-bold flex items-center gap-2 text-neon-yellow uppercase tracking-widest group-hover:text-yellow-300 transition-colors">
+                <div className="w-1.5 h-1.5 rounded-full bg-neon-yellow" />
+                Level
+              </h2>
+              <ChevronDown
+                className={clsx(
+                  "w-4 h-4 text-slate-500 transition-transform duration-300",
+                  isDifficultyOpen && "rotate-180"
+                )}
+              />
+            </button>
+
+            {isDifficultyOpen && (
+              <div className="flex flex-col gap-2 pt-3 border-t border-slate-700/50">
+                {DIFFICULTIES.map((d) => (
+                  <button
+                    key={d.id}
+                    onClick={() => adminAction({ type: "setDifficulty", difficulty: d.id })}
+                    className={clsx(
+                      "flex items-center justify-between px-3 py-2 rounded-xl border transition-all text-[11px] font-bold uppercase tracking-wider cursor-pointer",
+                      gameState?.difficulty === d.id
+                        ? "bg-neon-yellow text-slate-900 border-neon-yellow"
+                        : "bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
+                    )}
+                  >
+                    <span>{d.label}</span>
+                    <span className={clsx(
+                      "text-[10px] font-mono font-black tracking-tight",
+                      gameState?.difficulty === d.id ? "text-slate-700" : "text-neon-yellow"
+                    )}>
+                      +{d.points}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Display Settings */}
           <div className="bg-slate-800/50 shadow-sm p-4 rounded-2xl border border-slate-700/50 space-y-4">
             <h2 className="text-xs font-bold flex items-center gap-2 text-neon-purple uppercase tracking-widest">
@@ -381,50 +425,6 @@ export default function Admin({
                 </span>
               </button>
             </div>
-          </div>
-
-          {/* Difficulty Info */}
-          <div className="bg-slate-800/50 shadow-sm p-4 rounded-2xl border border-slate-700/50 space-y-2">
-            <button
-              onClick={() => setIsDifficultyOpen(!isDifficultyOpen)}
-              className="w-full flex items-center justify-between group outline-none"
-            >
-              <h2 className="text-xs font-bold flex items-center gap-2 text-neon-yellow uppercase tracking-widest group-hover:text-yellow-300 transition-colors">
-                <div className="w-1.5 h-1.5 rounded-full bg-neon-yellow" />
-                Aras Kesukaran
-              </h2>
-              <ChevronDown
-                className={clsx(
-                  "w-4 h-4 text-slate-500 transition-transform duration-300",
-                  isDifficultyOpen && "rotate-180"
-                )}
-              />
-            </button>
-
-            {isDifficultyOpen && (
-              <div className="flex flex-col gap-2 pt-3 border-t border-slate-700/50">
-                {DIFFICULTIES.map((d) => (
-                  <button
-                    key={d.id}
-                    onClick={() => adminAction({ type: "setDifficulty", difficulty: d.id })}
-                    className={clsx(
-                      "flex items-center justify-between px-3 py-2 rounded-xl border transition-all text-[11px] font-bold uppercase tracking-wider cursor-pointer",
-                      gameState?.difficulty === d.id
-                        ? "bg-neon-yellow text-slate-900 border-neon-yellow"
-                        : "bg-slate-900 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-300"
-                    )}
-                  >
-                    <span>{d.label}</span>
-                    <span className={clsx(
-                      "text-[10px] font-mono font-black tracking-tight",
-                      gameState?.difficulty === d.id ? "text-slate-700" : "text-neon-yellow"
-                    )}>
-                      +{d.points}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* OBS Guide */}
