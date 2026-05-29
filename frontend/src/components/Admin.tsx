@@ -430,25 +430,15 @@ export default function Admin({
           {/* OBS Guide */}
           <div className="p-4 bg-neon-purple/5 border border-neon-purple/20 rounded-2xl mt-auto">
             <h2 className="text-[10px] font-bold text-neon-purple uppercase tracking-widest mb-3">
-              Arahan Persediaan OBS
+              Cara Setup di OBS / TikTok LIVE Studio
             </h2>
             <ol className="list-decimal list-outside ml-3 space-y-1.5 text-[11px] text-slate-400 leading-relaxed">
-              <li>
-                Masukkan nama pengguna TikTok dan klik{" "}
-                <span className="text-white">Sambung</span>.
-              </li>
-              <li>
-                Buka OBS atau TikTok LIVE Studio.
-              </li>
-              <li>
-                Tambah{" "}
-                <span className="text-neon-cyan">Sumber Pelayar (Browser Source)</span>.
-              </li>
-              <li>Tetapkan URL ke halaman ini.</li>
-              <li>
-                Tetapkan Resolusi: <span className="text-white">1280×768</span>.
-              </li>
-              <li>Anda sudah bersedia untuk mula siaran!</li>
+              <li>Masukkan nama pengguna TikTok anda dan tekan Sambung.</li>
+              <li>Buka OBS Studio atau TikTok LIVE Studio.</li>
+              <li>Tambah Browser Source / Sumber Pelayar baru.</li>
+              <li>Masukkan URL halaman game ini ke dalam Browser Source.</li>
+              <li>Tetapkan resolusi kepada 1280 × 768 untuk paparan terbaik.</li>
+              <li>Selesai — overlay anda kini siap digunakan semasa LIVE.</li>
             </ol>
           </div>
         </div>
