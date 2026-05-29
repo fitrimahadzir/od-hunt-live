@@ -37,7 +37,7 @@ export default function Overlay({ gameState, notifications, tiktokStatus, adminA
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-dark-bg dark:bg-slate-900 transition-colors duration-500">
-      <div className="w-[1280px] h-[768px] relative mx-auto bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-sans overflow-hidden flex flex-col p-6 border border-slate-200 dark:border-slate-700 select-none transition-colors duration-500 shadow-2xl dark:shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+      <div className="w-[1280px] h-[768px] relative mx-auto bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-sans overflow-hidden flex flex-col p-6 border border-slate-200 dark:border-slate-700 select-none transition-colors duration-500 shadow-2xl dark:shadow-[0_0_50px_rgba(0,0,0,0.5)] rounded-2xl">
         {/* Main Gameplay Area */}
         <div className="flex-1 flex gap-8 items-center justify-center min-h-0">
           {/* Left Sidebar */}
