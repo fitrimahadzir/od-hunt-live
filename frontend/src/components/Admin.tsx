@@ -20,10 +20,10 @@ interface AdminProps {
 }
 
 const DIFFICULTIES = [
-  { id: "easy", label: "Easy", description: "A vs B, 3 vs 8" },
-  { id: "medium", label: "Medium", description: "O vs Q, P vs R, 5 vs 6" },
-  { id: "hard", label: "Hard", description: "M vs N, C vs G, 8 vs 9" },
-  { id: "impossible", label: "Impossible", description: "I vs l, O vs 0, B vs 8, S vs 5" },
+  { id: "easy", label: "Easy", points: 1 },
+  { id: "medium", label: "Medium", points: 2 },
+  { id: "hard", label: "Hard", points: 5 },
+  { id: "impossible", label: "Impossible", points: 15 },
 ];
 
 export default function Admin({
@@ -414,8 +414,11 @@ export default function Admin({
                     )}
                   >
                     <span>{d.label}</span>
-                    <span className="text-[9px] font-mono text-slate-500 normal-case tracking-normal">
-                      {d.description}
+                    <span className={clsx(
+                      "text-[10px] font-mono font-black tracking-tight",
+                      gameState?.difficulty === d.id ? "text-slate-700" : "text-neon-yellow"
+                    )}>
+                      +{d.points}
                     </span>
                   </div>
                 ))}
