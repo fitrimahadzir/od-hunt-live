@@ -70,5 +70,6 @@ export const useSocket = () => {
     notifications,
     connectTiktok,
     adminAction,
+    sessionId,
   };
 };
