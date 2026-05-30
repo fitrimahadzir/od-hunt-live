@@ -6,7 +6,8 @@ import { GRID_MODES } from "../config.js";
 export function handleAdminAction(
   io: Server,
   gameEngine: GameEngine,
-  action: AdminAction
+  action: AdminAction,
+  roomId?: string
 ) {
   switch (action.type) {
     case "skip":
@@ -30,8 +31,9 @@ export function handleAdminAction(
       gameEngine.simulateCorrect();
       break;
 
-    case "simulateGift":
-      io.emit("notification", {
+    case "simulateGift": {
+      const target = roomId ? io.to(roomId) : io;
+      target.emit("notification", {
         type: "gift",
         data: {
           uniqueId: action.uniqueId || "dev_user",
@@ -41,6 +43,7 @@ export function handleAdminAction(
         },
       });
       break;
+    }
 
     case "setGridMode":
       if (action.mode && GRID_MODES[action.mode as GridMode]) {

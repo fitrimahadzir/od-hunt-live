@@ -5,22 +5,24 @@ import { GameEngine } from "../game/engine.js";
 export class TikTokManager {
   private io: Server;
   private gameEngine: GameEngine;
+  private roomId: string;
   private connection: WebcastPushConnection | null = null;
 
-  constructor(io: Server, gameEngine: GameEngine) {
+  constructor(io: Server, gameEngine: GameEngine, roomId: string) {
     this.io = io;
     this.gameEngine = gameEngine;
+    this.roomId = roomId;
   }
 
   async connect(username: string) {
     this.disconnect();
     this.gameEngine.setTiktokUsername(username);
-    this.io.emit("tiktokStatus", { status: "connecting" });
+    this.io.to(this.roomId).emit("tiktokStatus", { status: "connecting" });
 
     this.connection = new WebcastPushConnection(username);
     await this.connection.connect();
 
-    this.io.emit("tiktokStatus", {
+    this.io.to(this.roomId).emit("tiktokStatus", {
       status: "connected",
       roomId: (this.connection as any).roomId,
     });
@@ -35,15 +37,15 @@ export class TikTokManager {
     });
 
     this.connection.on("gift", (data) => {
-      this.io.emit("notification", { type: "gift", data });
+      this.io.to(this.roomId).emit("notification", { type: "gift", data });
     });
 
     this.connection.on("like", (data) => {
-      this.io.emit("notification", { type: "like", data });
+      this.io.to(this.roomId).emit("notification", { type: "like", data });
     });
 
     this.connection.on("follow", (data) => {
-      this.io.emit("notification", { type: "follow", data });
+      this.io.to(this.roomId).emit("notification", { type: "follow", data });
     });
   }
 

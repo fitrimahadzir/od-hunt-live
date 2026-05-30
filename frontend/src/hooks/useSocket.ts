@@ -3,6 +3,16 @@ import { io, Socket } from "socket.io-client";
 
 const BACKEND_URL =
   import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+const SESSION_KEY = "odd-hunt-session-id";
+
+function getOrCreateSessionId(): string {
+  let sessionId = localStorage.getItem(SESSION_KEY);
+  if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem(SESSION_KEY, sessionId);
+  }
+  return sessionId;
+}
 
 export const useSocket = () => {
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -11,9 +21,12 @@ export const useSocket = () => {
     status: "disconnected",
   });
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [sessionId] = useState(getOrCreateSessionId);
 
   useEffect(() => {
-    const newSocket = io(BACKEND_URL);
+    const newSocket = io(BACKEND_URL, {
+      auth: { sessionId },
+    });
     setSocket(newSocket);
 
     newSocket.on("gameState", (state) => {
@@ -34,7 +47,7 @@ export const useSocket = () => {
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [sessionId]);
 
   const connectTiktok = useCallback(
     (username: string) => {

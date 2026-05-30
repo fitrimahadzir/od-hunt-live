@@ -3,9 +3,8 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import cors from "cors";
 import path from "path";
-import { GameEngine } from "./game/engine.js";
-import { TikTokManager } from "./tiktok/client.js";
 import { handleAdminAction } from "./socket/admin.js";
+import { SessionManager } from "./session.js";
 
 const PORT = Number(process.env.PORT) || 8080;
 const CORS_ORIGIN = process.env.CORS_ORIGIN || "*";
@@ -24,33 +23,31 @@ const io = new Server(httpServer, {
   },
 });
 
-const gameEngine = new GameEngine((state) => {
-  io.emit("gameState", state);
-});
-
-const tiktokManager = new TikTokManager(io, gameEngine);
+const sessionManager = new SessionManager(io);
 
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "ok",
     uptime: process.uptime(),
-    round: gameEngine.getState().roundNumber,
-    players: gameEngine.getState().leaderboard.length,
+    sessions: sessionManager.getSessionCount(),
   });
 });
 
-app.get("/api/game-state", (_req, res) => {
-  res.json(gameEngine.getState());
-});
-
 io.on("connection", (socket) => {
-  socket.emit("gameState", gameEngine.getState());
+  const sessionId =
+    (socket.handshake.auth?.sessionId as string) ||
+    socket.id;
+
+  const session = sessionManager.getOrCreateSession(sessionId);
+  socket.join(sessionId);
+
+  socket.emit("gameState", session.gameEngine.getState());
 
   socket.on("connectTiktok", async (username: string) => {
     try {
-      await tiktokManager.connect(username);
+      await session.tiktokManager.connect(username);
     } catch (err: any) {
-      io.emit("tiktokStatus", {
+      io.to(sessionId).emit("tiktokStatus", {
         status: "error",
         message: err.message || "Failed to connect to TikTok",
       });
@@ -58,7 +55,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("adminAction", (action: any) => {
-    handleAdminAction(io, gameEngine, action);
+    handleAdminAction(io, session.gameEngine, action, sessionId);
   });
 });
 
@@ -70,12 +67,6 @@ if (SERVE_STATIC) {
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
-
-setInterval(() => {
-  gameEngine.getState();
-}, 2000);
-
-gameEngine.startNewGame();
 
 httpServer.listen(PORT, () => {
   console.log(`Odd Hunt Backend running on http://localhost:${PORT}`);
